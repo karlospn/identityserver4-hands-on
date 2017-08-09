@@ -3,3 +3,15 @@
 ################################################################################
 
 /DummyApi
+/ImageGallery/ImageGallery.API/bin/Debug/netcoreapp1.1
+/ImageGallery/ImageGallery.API/bin/Debug/netcoreapp1.1
+/ImageGallery/ImageGallery.API/bin/Debug/netcoreapp1.1
+/ImageGallery/ImageGallery.API/obj
+/ImageGallery/ImageGallery.Client/bin/Debug/netcoreapp1.1
+/ImageGallery/ImageGallery.Client/obj
+/ImageGallery/ImageGallery.Model/bin/Debug/netstandard1.6
+/ImageGallery/ImageGallery.Model/obj
+/ImageGallery/ImageGallery.Client/wwwroot/lib
+/ImageGallery/IdentityProvider/bin/Debug/netcoreapp1.1
+/ImageGallery/IdentityProvider/obj
+/ImageGallery/IdentityProvider/wwwroot/lib
