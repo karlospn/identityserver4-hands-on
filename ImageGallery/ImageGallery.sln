@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.Client", "Imag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.Model", "ImageGallery.Model\ImageGallery.Model.csproj", "{D2D97540-A78B-4D6A-AC8D-32CEC24690F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityProvider", "IdentityProvider\IdentityProvider.csproj", "{BF5C663D-EE93-425A-86C9-AB9374533166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D2D97540-A78B-4D6A-AC8D-32CEC24690F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2D97540-A78B-4D6A-AC8D-32CEC24690F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2D97540-A78B-4D6A-AC8D-32CEC24690F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF5C663D-EE93-425A-86C9-AB9374533166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF5C663D-EE93-425A-86C9-AB9374533166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF5C663D-EE93-425A-86C9-AB9374533166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF5C663D-EE93-425A-86C9-AB9374533166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
