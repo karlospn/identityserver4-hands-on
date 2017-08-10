@@ -179,5 +179,11 @@ namespace ImageGallery.Client.Controllers
                 Debug.WriteLine($"Claim Type: {claim.Type} - Claim value: {claim.Value}");
             }
         }
+
+        public async Task Logout()
+        {
+            await HttpContext.Authentication.SignOutAsync("Cookies");
+            await HttpContext.Authentication.SignOutAsync("oidc");
+        }
     }
 }

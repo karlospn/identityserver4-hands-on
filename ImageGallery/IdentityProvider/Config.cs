@@ -68,8 +68,11 @@ namespace IdentityProvider
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
-                    }, 
-                    AlwaysIncludeUserClaimsInIdToken = true
+                    },
+                    PostLogoutRedirectUris =
+                    {
+                        "https://localhost:44336/signout-callback-oidc"
+                    }
                 }
             };
         }
