@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -50,7 +51,26 @@ namespace IdentityProvider
         {
             return new List<Client>
             {
-                
+                new Client
+                {
+                    ClientName = "Image Gallery",
+                    ClientId = "imagegalleryclient",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new List<string>
+                    {
+                       "https://localhost:44336/signin-oidc"
+                    },
+                    AllowedScopes = 
+                    {
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    }, 
+                    AlwaysIncludeUserClaimsInIdToken = true
+                }
             };
         }
     }
