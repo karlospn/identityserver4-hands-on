@@ -28,6 +28,8 @@ namespace SocialNetwork.OAuth
                 .AddInMemoryClients(Clients.All())
                 .AddInMemoryApiResources(ApiResources.All())
                 .AddTestUsers(Users.All());
+
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -36,6 +38,9 @@ namespace SocialNetwork.OAuth
             app.UseDeveloperExceptionPage();
 
             app.UseIdentityServer();
+
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
