@@ -47,6 +47,21 @@ namespace SocialNetwork.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies"
+            });
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            {
+                AuthenticationScheme = "oidc",
+                SignInScheme = "Cookies",
+                Authority = "http://localhost:5000",
+                RequireHttpsMetadata = false,
+                ClientId = "socialnetwork_implicit",
+                SaveTokens = true
+            });
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

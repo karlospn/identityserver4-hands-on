@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using SocialNetwork.Web.Models;
 
@@ -36,27 +37,12 @@ namespace SocialNetwork.Web.Controllers
         }
 
         public IActionResult Login()
-        {
+        { 
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Login(string username, string password)
-        {
-            // NEVER DO THIS
-            // NEVER DO THIS
-            // NEVER DO THIS
-            // NEVER DO THIS
-            HttpContext.Response.Cookies.Append("username", username);
 
-            // NEVER DO THIS
-            // NEVER DO THIS
-            // NEVER DO THIS
-            HttpContext.Response.Cookies.Append("password", password);
-
-            return RedirectToAction("Shouts");
-        }
-
+        [Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

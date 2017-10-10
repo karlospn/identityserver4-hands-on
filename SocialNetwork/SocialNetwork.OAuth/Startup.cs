@@ -27,6 +27,7 @@ namespace SocialNetwork.OAuth
                 .AddTemporarySigningCredential()
                 .AddInMemoryClients(Clients.All())
                 .AddInMemoryApiResources(ApiResources.All())
+                .AddInMemoryIdentityResources(IdentityResources.All())
                 .AddTestUsers(Users.All());
 
             services.AddMvc();
