@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using SocialNetwork.Api.Helpers;
 using SocialNetwork.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,11 @@ namespace SocialNetwork.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAsync(string username, string password)
+        [Authorize]
+        public async Task<IActionResult> GetAsync()
         {
-            var user = await userRepository.GetAsync(username, HashHelper.Sha512(password + username));
+            var username = User.Claims.First(x => x.Type == "email").Value;
+            var user = await userRepository.GetAsync(username, "password");
 
             if (user == null)
             {

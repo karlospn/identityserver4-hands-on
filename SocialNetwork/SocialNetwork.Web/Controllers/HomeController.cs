@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using SocialNetwork.Web.Models;
@@ -14,21 +16,16 @@ namespace SocialNetwork.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<ActionResult> Shouts()
         {
-            // NEVER DO THIS
-            var username = HttpContext.Request.Cookies["username"]?.ToString();
-            // NEVER DO THIS
-            var password = HttpContext.Request.Cookies["password"]?.ToString();
-
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                return RedirectToAction("login");
-            }
+            var token = await HttpContext.Authentication.GetTokenAsync("access_token");
 
             using (var client = new HttpClient())
             {
-                var shoutsResponse = await (await client.GetAsync($"http://localhost:33917/api/shouts?username={username}&password={password}")).Content.ReadAsStringAsync();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var shoutsResponse = await (await client.GetAsync($"http://localhost:33917/api/shouts")).Content.ReadAsStringAsync();
 
                 var shouts = JsonConvert.DeserializeObject<Shout[]>(shoutsResponse);
                 

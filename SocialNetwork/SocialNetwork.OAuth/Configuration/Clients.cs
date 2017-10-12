@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityServer4;
 
 namespace SocialNetwork.OAuth.Configuration
@@ -42,7 +43,7 @@ namespace SocialNetwork.OAuth.Configuration
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "socialnetwork"
+                        "socialnetwork",
                     },
                     AllowOfflineAccess = true,
                     RedirectUris = new[] {"http://localhost:28849/signin-oidc"},
@@ -61,7 +62,11 @@ namespace SocialNetwork.OAuth.Configuration
                 {
                     SubjectId = "1",
                     Username = "mail@filipekberg.se",
-                    Password = "password"
+                    Password = "password",
+                    Claims = new []{
+                        new Claim("email", "mail@filipekberg.se"),
+                        new Claim("test", "test_claim")
+                    }
                 }
             };
         }
@@ -73,6 +78,9 @@ namespace SocialNetwork.OAuth.Configuration
         {
             return new[] {
                 new ApiResource("socialnetwork", "Social Network")
+                {
+                    UserClaims = new [] { "email", "test" }
+                }
             };
         }
     }
@@ -83,7 +91,8 @@ namespace SocialNetwork.OAuth.Configuration
         { 
             return new IdentityResource[] {
                 new IdentityServer4.Models.IdentityResources.OpenId(),
-                new IdentityServer4.Models.IdentityResources.Profile()
+                new IdentityServer4.Models.IdentityResources.Profile(),
+                new IdentityServer4.Models.IdentityResources.Email()
             };
         }
     }
