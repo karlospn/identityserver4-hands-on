@@ -45,6 +45,7 @@ namespace SocialNetwork.Web.Controllers
         [Authorize]
         public IActionResult About()
         {
+            var claim = User.Claims;
             ViewData["Message"] = "Your application description page.";
 
             return View();

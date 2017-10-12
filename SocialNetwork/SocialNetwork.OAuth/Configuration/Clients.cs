@@ -29,7 +29,8 @@ namespace SocialNetwork.OAuth.Configuration
                         "socialnetwork"
                     },
                     RedirectUris = new[] {"http://localhost:28849/signin-oidc"},
-                    PostLogoutRedirectUris = { "http://localhost:28849/signout-callback-oidc" }
+                    PostLogoutRedirectUris = { "http://localhost:28849/signout-callback-oidc" },
+                    AllowAccessTokensViaBrowser = true
                 }
             };
         }
