@@ -55,15 +55,29 @@ namespace SocialNetwork.Web
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
+            //app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            //{
+            //    AuthenticationScheme = "oidc",
+            //    SignInScheme = "Cookies",
+            //    Authority = "http://localhost:5000",
+            //    RequireHttpsMetadata = false,
+            //    ClientId = "socialnetwork_implicit",
+            //    SaveTokens = true,
+            //    ResponseType = "id_token token"
+            //});
+
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
                 AuthenticationScheme = "oidc",
                 SignInScheme = "Cookies",
                 Authority = "http://localhost:5000",
                 RequireHttpsMetadata = false,
-                ClientId = "socialnetwork_implicit",
+                ClientId = "socialnetwork_code",
+                ClientSecret = "secret",
                 SaveTokens = true,
-                ResponseType = "id_token token"
+                ResponseType = "id_token code",
+                Scope = { "socialnetwork", "offline_access"},
+                GetClaimsFromUserInfoEndpoint =  true
             });
 
             app.UseStaticFiles();

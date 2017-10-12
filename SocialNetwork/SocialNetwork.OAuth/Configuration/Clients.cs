@@ -31,6 +31,23 @@ namespace SocialNetwork.OAuth.Configuration
                     RedirectUris = new[] {"http://localhost:28849/signin-oidc"},
                     PostLogoutRedirectUris = { "http://localhost:28849/signout-callback-oidc" },
                     AllowAccessTokensViaBrowser = true
+                },
+                new Client
+                {
+                    ClientId = "socialnetwork_code",
+                    ClientSecrets = new [] { new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedScopes = new []
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "socialnetwork"
+                    },
+                    AllowOfflineAccess = true,
+                    RedirectUris = new[] {"http://localhost:28849/signin-oidc"},
+                    PostLogoutRedirectUris = { "http://localhost:28849/signout-callback-oidc" },
+                    AllowAccessTokensViaBrowser = true
                 }
             };
         }
