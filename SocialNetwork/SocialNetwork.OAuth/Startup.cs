@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
+using SocialNetwork.Data.Repositories;
 using SocialNetwork.OAuth.Configuration;
 
 namespace SocialNetwork.OAuth
@@ -34,12 +35,14 @@ namespace SocialNetwork.OAuth
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserValidator, UserValidator>();
             services.AddSingleton<Func<IDbConnection>>(() => new SqlConnection(Configuration.GetConnectionString("SocialNetwork")));
 
             var assembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
-                .AddTestUsers(Users.All())
+                .AddResourceOwnerValidator<ResourceOwnerClassValidator>()
                 .AddConfigurationStore(builder => builder.UseSqlServer(Configuration.GetConnectionString("SocialNetwork.OAuth"), options => options.MigrationsAssembly(assembly)))
                 .AddOperationalStore(builder => builder.UseSqlServer(Configuration.GetConnectionString("SocialNetwork.OAuth"), options => options.MigrationsAssembly(assembly)));
 
