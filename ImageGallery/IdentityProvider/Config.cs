@@ -20,7 +20,8 @@ namespace IdentityProvider
                     Claims = new List<Claim>
                     {
                         new Claim("given_name", "Frank"),
-                        new Claim("family_name", "Johnson")
+                        new Claim("family_name", "Johnson"),
+                        new Claim("address", "1 Street")
                     }
                 },
                 new TestUser
@@ -31,7 +32,9 @@ namespace IdentityProvider
                     Claims = new List<Claim>
                     {
                         new Claim("given_name", "Bob"),
-                        new Claim("family_name", "Johnson")
+                        new Claim("family_name", "Johnson"),
+                        new Claim("address", "2 Street")
+
                     }
                 }
 
@@ -43,7 +46,8 @@ namespace IdentityProvider
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Address()
             };
         }
 
@@ -64,6 +68,7 @@ namespace IdentityProvider
                     {
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Address
                     },
                     ClientSecrets =
                     {

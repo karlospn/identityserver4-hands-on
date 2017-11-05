@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using ImageGallery.Client.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace ImageGallery.Client
 {
@@ -58,18 +64,44 @@ namespace ImageGallery.Client
                 AuthenticationScheme = "Cookies"
             });
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
                 AuthenticationScheme = "oidc",
                 Authority = "https://localhost:44365/",
                 RequireHttpsMetadata = true,
                 ClientId = "imagegalleryclient",
-                Scope = {"openid", "profile" },
+                Scope = {"openid", "profile", "address" },
                 ResponseType = "code id_token",
                 SignInScheme = "Cookies",
                 SaveTokens = true,
                 ClientSecret = "secret",
-                GetClaimsFromUserInfoEndpoint = true
+                GetClaimsFromUserInfoEndpoint = true,
+                Events = new OpenIdConnectEvents
+                {
+                    OnTokenValidated = ctx =>
+                    {
+                        var id = ctx.Ticket.Principal.Identity as ClaimsIdentity;
+
+                        var subjectClaim = id.Claims.FirstOrDefault(x => x.Type == "sub");
+
+                        var newClaimsIdentity =
+                            new ClaimsIdentity(ctx.Ticket.AuthenticationScheme, "given_name", "role");
+
+                        newClaimsIdentity.AddClaim(subjectClaim);
+
+                        ctx.Ticket = new AuthenticationTicket(new ClaimsPrincipal(newClaimsIdentity), ctx.Ticket.Properties, ctx.Ticket.AuthenticationScheme);
+
+                         return Task.FromResult(0);
+                    },
+
+                    OnUserInformationReceived = ctx =>
+                    {
+                        ctx.User.Remove("address");
+                        return Task.FromResult(0);
+                    }
+                }
             });
 
             app.UseStaticFiles();
