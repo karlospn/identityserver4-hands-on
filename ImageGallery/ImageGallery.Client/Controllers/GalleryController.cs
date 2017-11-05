@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using ImageGallery.Model;
 using System.Net.Http;
 using System.IO;
+using IdentityModel.Client;
 using ImageGallery.Client.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -184,6 +185,21 @@ namespace ImageGallery.Client.Controllers
         {
             await HttpContext.Authentication.SignOutAsync("Cookies");
             await HttpContext.Authentication.SignOutAsync("oidc");
+        }
+
+
+        public async Task<IActionResult> OrderFrame()
+        {
+            var client = await DiscoveryClient.GetAsync("https://localhost:44365/");
+            var userInfo = new UserInfoClient(client.UserInfoEndpoint);
+            var response = await userInfo.GetAsync(await HttpContext.Authentication.GetTokenAsync(OpenIdConnectParameterNames.AccessToken));
+
+            if (response.IsError)
+            {
+                throw new Exception("Problem accessing UserInfo endpoint.", response.Exception);
+            }
+
+            return View(new OrderFrameViewModel(response.Claims.FirstOrDefault(x => x.Type == "address")?.Value));
         }
     }
 }
