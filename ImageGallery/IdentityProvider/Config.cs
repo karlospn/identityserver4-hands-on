@@ -21,7 +21,9 @@ namespace IdentityProvider
                     {
                         new Claim("given_name", "Frank"),
                         new Claim("family_name", "Johnson"),
-                        new Claim("address", "1 Street")
+                        new Claim("address", "1 Street"),
+                        new Claim("role", "FreeUser")
+
                     }
                 },
                 new TestUser
@@ -33,7 +35,9 @@ namespace IdentityProvider
                     {
                         new Claim("given_name", "Bob"),
                         new Claim("family_name", "Johnson"),
-                        new Claim("address", "2 Street")
+                        new Claim("address", "2 Street"),
+                        new Claim("role", "PayingUser")
+
 
                     }
                 }
@@ -47,7 +51,8 @@ namespace IdentityProvider
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Address()
+                new IdentityResources.Address(),
+                new IdentityResource("role", "Roles(s)", new List<string>{"role"})
             };
         }
 
@@ -68,7 +73,8 @@ namespace IdentityProvider
                     {
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Address
+                        IdentityServerConstants.StandardScopes.Address,
+                        "role"
                     },
                     ClientSecrets =
                     {

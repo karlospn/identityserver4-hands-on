@@ -61,7 +61,8 @@ namespace ImageGallery.Client
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationScheme = "Cookies"
+                AuthenticationScheme = "Cookies",
+                AccessDeniedPath = "/Authorization/AccessDenied"
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -72,7 +73,7 @@ namespace ImageGallery.Client
                 Authority = "https://localhost:44365/",
                 RequireHttpsMetadata = true,
                 ClientId = "imagegalleryclient",
-                Scope = {"openid", "profile", "address" },
+                Scope = {"openid", "profile", "address", "role" },
                 ResponseType = "code id_token",
                 SignInScheme = "Cookies",
                 SaveTokens = true,
